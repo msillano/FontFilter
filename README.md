@@ -11,4 +11,4 @@ Main filter functions:
 -         EVAL      (uses JavaScript not linear expressions for all glyphs)
 -         SKELETON  (shrink process for all glyphs, stick fonts)
 
-More infos in the document
+More infos see documents/HOWTO_TTFfonts_en.pdf   (versione italiana: HOWTO_TTFfonts_it.pdf)

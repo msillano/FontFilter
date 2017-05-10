@@ -1,0 +1,92 @@
+#by fontfilter 4.02 (10/11/25)
+#Sat Jan 09 19:47:03 CET 2016
+
+# NOTE: no spaces before/after the '=' sign
+# NOTE: all measures are based on CHR definition (i.e. ??x21 grid)
+# NOTE: in file path the '\'  must be escaped ('\\')
+
+#==== paramters (override from commandline):
+# -i (input file)
+parameters.i#1=D:\\User\\Documents\\progetti2016\\stickfonts\\chr\\constantia.chr
+# -o (output file .CHR or .SVG) 
+parameters.o#1=resultfont.svg
+
+#==== general options
+# processed char limits, decimal inclusive 
+# Examples: all: 32..126; upcase: 65..90;  lowcase: 97..122;  numbers: 48..57; only the char 'I': 73..73
+SKstart=32
+SKend=126
+
+# eliminates segments less than smallLine: values 0.1..0.5; 0 for none
+smallLine=0.2
+
+# cuts segments longer than longLine: values 2..8; 100 for none
+longLine=3
+
+#==== filter functions 
+# font_filter function, used to transform the input CHR font
+# one of: NULL      (none: used for conversion CHR to SVG)
+#         QUAD      (uses quadratic map qmFINAL for all glyphs)
+#         MANYQUAD  (uses only specific glyphs and many quadratic maps)
+#         EVAL      (uses JavaScript expressions for all glyphs)
+#         SKELETON  (shrink process for all glyphs)
+function=SKELETON
+
+#==== function QUAD, parameters
+# qmFINAL=<quadratic map> (xoffset; x*x; x*y; y*y; x; y; yoffset; x*x; x*y; y*y; x; y)
+# pay attention to order!!!
+# default (do nothing: x'=x; y'=y) =0;0;0;0;1;0; 0;0;0;0;0;1
+qmFINAL=0;0;0;0;1;0.4; 0;0;0;0;0;1
+
+#==== function MANYQUAD, parameters
+# list of chars and quadratic maps
+# one line: QM_<ex-character>=glyphCHR;<quadratic map> (QM_XXXX=asterisk;0;0;0;0;1;0; 0;0;0;0;0;1)
+# note: glyphCHR names from aglfn.txt (http://partners.adobe.com/public/developer/en/opentype/aglfn.txt)
+#
+#example: a 4x4 slant and narrow test using 'A' glyph, output in the range u0041-u0050 
+QM_0041=A;0;0;0;0;1; 0;   0;0;0;0;0; 1
+QM_0042=A;0;0;0;0;1; 0.1; 0;0;0;0;0; 1
+QM_0043=A;0;0;0;0;1; 0.2; 0;0;0;0;0; 1
+QM_0044=A;0;0;0;0;1; 0.3; 0;0;0;0;0; 1
+QM_0045=A;0;0;0;0;1; 0;   0;0;0;0;0; 1.2
+QM_0046=A;0;0;0;0;1; 0.1; 0;0;0;0;0; 1.2
+QM_0047=A;0;0;0;0;1; 0.2; 0;0;0;0;0; 1.2
+QM_0048=A;0;0;0;0;1; 0.3; 0;0;0;0;0; 1.2
+QM_0049=A;0;0;0;0;1; 0;   0;0;0;0;0; 1.4
+QM_004A=A;0;0;0;0;1; 0.1; 0;0;0;0;0; 1.4
+QM_004B=A;0;0;0;0;1; 0.2; 0;0;0;0;0; 1.4
+QM_004C=A;0;0;0;0;1; 0.3; 0;0;0;0;0; 1.4
+QM_004D=A;0;0;0;0;1; 0;   0;0;0;0;0; 1.6
+QM_004E=A;0;0;0;0;1; 0.1; 0;0;0;0;0; 1.6
+QM_004F=A;0;0;0;0;1; 0.2; 0;0;0;0;0; 1.6
+QM_0050=A;0;0;0;0;1; 0.3; 0;0;0;0;0; 1.6
+
+#==== function EVAL, parameters
+# JavaScript  expressions, that will be applied to every point:
+#  x = f(x,y)
+#  y = g(x,y)
+# newX=<js_expr> In exp, x and y are the old values
+# newY=<js_expr> for js math functions see DMath.java
+#note: better using many points: set longLine= 0.5..3
+# example, top compression
+newX=x
+newY=h=6;(y > h)? (h + (y-h)*0.40): y
+#example, curve lines to rigth
+#newY=y
+#newX=r=25;x+(r-Math.sqrt(r*r-y*y))
+
+#==== function SKELETON, parameters
+# note: very experimental, output font needs hand tuning in FontForge !!
+# SKoutput: final output style
+# one of: TEST   (skeleton and original border, no cleanup: only for test purpose)
+#         LINE   (only central lines: for single line glyph)
+#         SHRINK (for bold [ShrinkFactor > 1] or light [0 < ShrinkFactor < 1] font transformations)
+#note: better using less points: set longLine=100
+SKoutput=LINE
+
+# only for SHRINK output style
+ShrinkFactor=0.8
+
+#=== internal test only, do not change!
+mathPrecision=0.001
+attractRadius=0.08

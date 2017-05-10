@@ -1,0 +1,34 @@
+INSTALLATION NOTES - WIN
+
+FEATURES
+see documents/HOWTO_TTFfonts_en.pdf   (versione italiana: HOWTO_TTFfonts_it.pdf)
+
+INSTALLATION
+preconditions: java 
+               Notepad++ (an ASCII editor)
+               StickFonts
+               FontForge
+
+1) download all fies in a dir writable (e.g. C:\myprogs\fontfilter)
+2) edit and modify the file dofilter.bat 
+3) optional: Add a link on desktop to dofilter.bat using fontfilter.ico
+
+USE
+see toolchain in documents/HOWTO_TTFfonts_en.pdf   (versione italiana: HOWTO_TTFfonts_it.pdf)
+
+1) Convert the base TTF font to CHR using StickFont
+======
+2) Edit configuration file fontfilter.ffc before to run dofilter.bat. Set:
+       a) Input file
+       b) Range of processed glyphs
+       c) Filter transformation and parameters
+       d) Output file (SVG)
+       note: the file fontfilter.fcc.model is the initial default. Don't change it.
+3) Run filter using dofilter.bat
+======
+4) Open the output SVG font in FontForge to see results
+5) Edit glyphs as required
+6) Save as TTF
+ 
+DEVELOPMENT
+All souces are in src/src.zip  (GNU GPL license)
